@@ -5,6 +5,7 @@ import Education from './components/Education'
 import BentoGrid from './components/BentoGrid'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
+import Resume from './components/Resume'
 import Contact from './components/Contact'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <BentoGrid />
           <Projects />
           <Skills />
+          <Resume />
           <Contact />
         </main>
         

@@ -18,7 +18,7 @@ const skills = [
 
 export default function Skills() {
   return (
-    <section id="tech" className="max-w-6xl mx-auto px-4 py-24 border-t border-white/5">
+    <section id="tech" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

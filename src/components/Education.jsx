@@ -4,13 +4,13 @@ import { GraduationCap, Award, BookOpen } from 'lucide-react';
 
 export default function Education() {
   return (
-    <section id="education" className="max-w-6xl mx-auto px-4 py-24 border-t border-white/5">
+    <section id="education" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5 }}
-        className="mb-12"
+        className="mb-10 md:mb-12"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
           Education
@@ -22,7 +22,7 @@ export default function Education() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="glass-card p-8 md:p-12 relative overflow-hidden group"
+        className="glass-card p-6 md:p-12 relative overflow-hidden group"
       >
         <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
           <GraduationCap size={160} />

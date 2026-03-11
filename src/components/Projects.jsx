@@ -23,14 +23,14 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="max-w-6xl mx-auto px-4 py-24">
+    <section id="projects" className="max-w-6xl mx-auto px-4 py-16 md:py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-10 md:mb-12 tracking-tight">
           Selected Projects
         </h2>
       </motion.div>
@@ -46,7 +46,7 @@ export default function Projects() {
             className="glass-card group overflow-hidden"
           >
             <div className={`h-2 w-full bg-gradient-to-r ${project.color}`} />
-            <div className="p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start">
+            <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
               <div className="bg-slate-900/50 p-4 rounded-2xl border border-white/5 shadow-inner hidden md:block">
                 <project.icon size={32} className={project.iconColor} />
               </div>

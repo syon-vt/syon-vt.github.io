@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="max-w-6xl mx-auto px-4 py-24 border-t border-white/5">
+    <section id="contact" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="glass-card p-8 flex flex-col justify-center space-y-6"
+          className="glass-card p-6 md:p-8 flex flex-col justify-center space-y-6"
         >
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
@@ -58,7 +58,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass-card p-8 flex flex-col justify-between"
+          className="glass-card p-6 md:p-8 flex flex-col justify-between"
         >
           <div className="space-y-6 mb-8">
              <div className="flex items-start gap-4">
