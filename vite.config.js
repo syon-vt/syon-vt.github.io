@@ -4,7 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/my-portfolio/',
+  // Setting base to relative matching for GitHub Pages
+  base: './',
   plugins: [
     react(),
     tailwindcss(),
