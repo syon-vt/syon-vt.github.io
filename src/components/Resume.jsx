@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download } from 'lucide-react';
+import resumeImg from '../assets/resume.jpg';
+import resumePdf from '../assets/resume.pdf';
 
 export default function Resume() {
+  const RESUME = {
+    pdf: resumePdf,
+    img: resumeImg
+  }
+
   return (
     <section id="resume" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
       <div className="flex flex-col gap-8 md:gap-12">
@@ -20,7 +27,7 @@ export default function Resume() {
           </div>
 
           <a
-            href="/resume.pdf"
+            href={RESUME.pdf}
             target="_blank"
             rel="noopener noreferrer"
             download="Syon_Vijae_Thyvalappil_Resume.pdf"
@@ -39,7 +46,7 @@ export default function Resume() {
           className="w-full glass-card overflow-hidden relative border border-white/10 flex justify-center bg-slate-900/50"
         >
           <img
-            src="/resume.jpg"
+            src={RESUME.img}
             alt="Resume"
             className="w-full h-auto object-contain max-h-[80vh] md:max-h-[1000px] rounded-2xl"
           />

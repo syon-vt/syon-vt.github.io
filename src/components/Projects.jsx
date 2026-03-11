@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, MonitorSmartphone, Wifi, CreditCard } from 'lucide-react';
+import { ExternalLink, MonitorSmartphone, Wifi, CreditCard } from 'lucide-react';
+
 
 const projects = [
   {
