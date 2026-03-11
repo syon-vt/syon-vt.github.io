@@ -83,7 +83,7 @@ export default function Contact() {
               <Github size={20} />
               <span className="font-medium">syon-vt</span>
             </a>
-            <a href="https://linkedin.com/in/SyonVijae" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-white/10 rounded-lg text-slate-300 hover:text-white hover:border-white/30 transition-all">
+            <a href="https://www.linkedin.com/in/syon-vijae-thyvalappil-b551b73a7/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-white/10 rounded-lg text-slate-300 hover:text-white hover:border-white/30 transition-all">
               <Linkedin size={20} />
               <span className="font-medium">Syon Vijae</span>
             </a>

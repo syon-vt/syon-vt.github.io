@@ -50,7 +50,7 @@ function App() {
             <a href="https://github.com/syon-vt" className="hover:text-cyan-400 transition-colors">
               <Github size={20} />
             </a>
-            <a href="https://linkedin.com/in/syon-vt" className="hover:text-cyan-400 transition-colors">
+            <a href="https://www.linkedin.com/in/syon-vijae-thyvalappil-b551b73a7/" className="hover:text-cyan-400 transition-colors">
               <Linkedin size={20} />
             </a>
           </div>
