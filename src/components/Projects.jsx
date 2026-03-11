@@ -55,12 +55,6 @@ export default function Projects() {
                 <div className="flex items-center justify-between">
                   <h3 className="text-2xl font-bold text-white">{project.title}</h3>
                   <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <a href="#" className="p-2 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors">
-                      <Github size={20} />
-                    </a>
-                    <a href="#" className="p-2 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors">
-                      <ExternalLink size={20} />
-                    </a>
                   </div>
                 </div>
 
