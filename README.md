@@ -1,16 +1,44 @@
-# React + Vite
+# Syon Vijae - Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An ultra-modern, extremely polished personal portfolio built with React, Vite, and Tailwind CSS. The interface features an otherworldly "Digital Deep Sea" aesthetic with Apple-level minimalism, native hardware-accelerated cursors, and 3D scenes.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **3D Interactive Hero**: Built using `React Three Fiber`, featuring a custom GLSL shader that renders an undulating bioluminescent sphere reacting to user controls.
+* **Cinematic Horizontal Scroll**: Overhauled vertical scrolling into a GSAP ScrollTrigger timeline, mapped synchronously with Lenis smooth-scrolling physics.
+* **100% Native Custom Cursor**: Engineered with Framer Motion, completely replacing browser native cursors with a highly responsive, lag-free glowing cyan orb (`translate3d` tracking).
+* **Glassmorphic Design System**: Advanced styling masking, including dynamic CSS `radial-gradient` borders that react locally to mouse proximity.
+* **Immersive Full-Screen Modals**: Uses Framer Motion's `AnimatePresence` to present massive, content-rich details on Club Recruitments and Coursework without breaking statically generated routes.
+* **Fully Static Deployable**: Designed specifically for seamless deployments on GitHub Pages (`base: './'`).
 
-## React Compiler
+## 💻 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Scroll Physics**: [GSAP ScrollTrigger](https://gsap.com/) + [Lenis](https://lenis.studiofreight.com/)
+- **3D Graphics**: [Three.js](https://threejs.org/) + [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/)
 
-## Expanding the ESLint configuration
+## 🛠️ Usage & Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Production Build**
+   ```bash
+   npm run build
+   ```
+   *The generated `/dist` folder can be directly served or deployed to GitHub Pages.*
+
+## 👨‍💻 Author
+
+**Syon Vijae**
+- [GitHub](https://github.com/syon-vt)
+- [LinkedIn](https://www.linkedin.com/in/syon-vijae-thyvalappil-b551b73a7/)

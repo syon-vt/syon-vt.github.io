@@ -1,42 +1,92 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* App.css - Spotlight and Animations */
+
+/* The actual spotlight cursor style */
+#spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  /* Hardware accelerated transform */
+  transform: translate3d(var(--x, -50%), var(--y, -50%), 0);
+  margin-top: -300px;
+  margin-left: -300px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 245, 255, 0.1) 0%,
+    rgba(189, 0, 255, 0.03) 30%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  will-change: transform;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Base custom dot cursor */
+#dot-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #00F5FF;
+  box-shadow: 0 0 10px #00F5FF, 0 0 20px #00F5FF;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(var(--x, -50%), var(--y, -50%), 0);
+  margin-top: -6px;
+  margin-left: -6px;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+#dot-cursor.hovering {
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+  margin-left: -24px;
+  background-color: rgba(0, 245, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 245, 255, 0.8);
 }
 
-.card {
-  padding: 2em;
+.horizontal-scroll-container {
+  display: flex;
+  width: max-content;
+  height: 100vh;
+  will-change: transform;
 }
 
-.read-the-docs {
-  color: #888;
+.card-spotlight-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-spotlight-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.card-spotlight-effect:hover::before {
+  opacity: 1;
+}
+
+.card-content-relative {
+  position: relative;
+  z-index: 10;
 }

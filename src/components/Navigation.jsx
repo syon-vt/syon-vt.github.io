@@ -1,132 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Home, BookOpen, Briefcase, GraduationCap, LayoutGrid, Mail, FileText } from 'lucide-react';
 
-const NAV_ITEMS = [
-  { name: 'About', href: '#about' },
-  { name: 'Education', href: '#education' },
-  { name: 'Clubs', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#tech' },
-  { name: 'Resume', href: '#resume' },
-  { name: 'Contact', href: '#contact' },
-];
+function DockIcon({ mouseX, item, activeSection, scrollTo }) {
+  const ref = useRef(null);
 
-export default function Navigation() {
-  const [activeSection, setActiveSection] = useState('about');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Measure X distance from cursor to icon center
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = NAV_ITEMS.map(item => item.href.substring(1));
-      let current = '';
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            current = section;
-          }
-        }
-      }
-
-      if (current) {
-        setActiveSection(current);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Balanced dynamic bounds for subtle macOS pop-out tracking (max 56px instead of 72px)
+  const sizeSync = useTransform(distance, [-100, 0, 100], [44, 56, 44]);
+  const size = useSpring(sizeSync, { mass: 0.1, stiffness: 200, damping: 18 });
+  
+  // Extremely gentle downward translation so the dock doesn't bulge terrifyingly into the container
+  const ySync = useTransform(distance, [-100, 0, 100], [0, 6, 0]);
+  const y = useSpring(ySync, { mass: 0.1, stiffness: 200, damping: 18 });
 
   return (
-    <>
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-slate-950 via-slate-950/90 to-transparent pt-6 md:pt-4 pb-16 px-4 pointer-events-none"
+    <motion.button
+      ref={ref}
+      style={{ width: size, height: size, y }}
+      onClick={() => scrollTo(item.id)}
+      className={`relative group rounded-full transition-colors flex items-center justify-center shrink-0 ${activeSection === item.id ? 'bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/30' : 'hover:bg-white/10 text-slate-400 bg-transparent'}`}
+      aria-label={item.label}
+    >
+      <item.icon size={20} className={`transition-colors ${activeSection === item.id ? 'text-[#00F5FF]' : 'group-hover:text-[#00F5FF]'}`} />
+      
+      <span className="absolute -bottom-14 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#131313] border border-white/10 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+        {item.label}
+      </span>
+    </motion.button>
+  );
+}
+
+export default function Navigation({ activeSection }) {
+  const navItems = [
+    { id: 'hero', label: 'Home', icon: Home },
+    { id: 'education', label: 'Education', icon: GraduationCap },
+    { id: 'experience', label: 'Experience', icon: Briefcase },
+    { id: 'projects', label: 'Projects', icon: LayoutGrid },
+    { id: 'tech', label: 'Skills', icon: BookOpen },
+    { id: 'resume', label: 'Resume', icon: FileText },
+    { id: 'contact', label: 'Contact', icon: Mail },
+  ];
+
+  const scrollTo = (id) => {
+    if (window.lenisScrollTo) {
+      if (id === 'hero' || id === 'contact' || id === 'resume') {
+        window.lenisScrollTo(`#${id}`);
+      } else {
+        const pinContainer = document.querySelector('.horizontal-view-trigger');
+        const targetSection = document.getElementById(id);
+        const scrollContainer = document.querySelector('.horizontal-scroll-container');
+        
+        if (!pinContainer || !targetSection || !scrollContainer) return;
+        
+        const containerLeft = scrollContainer.getBoundingClientRect().left;
+        const sectionLeft = targetSection.getBoundingClientRect().left;
+        const offsetLeft = sectionLeft - containerLeft;
+        
+        const pinTop = pinContainer.offsetTop;
+        const targetScroll = pinTop + offsetLeft;
+        
+        window.lenisScrollTo(targetScroll);
+      }
+    } else {
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const mouseX = useMotionValue(Infinity);
+
+  return (
+    <motion.nav 
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
+    >
+      {/* Defined strict height bounds to force hovering items to cleanly overflow downward out of the box vertically */}
+      <div 
+        className="flex items-start gap-2 px-3 pt-[10px] h-[64px] rounded-full glass-card bg-[#191919]/80 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
       >
-        <div className="max-w-6xl mx-auto flex justify-start md:justify-center items-center relative pointer-events-auto">
-          {/* Desktop Nav */}
-          <nav className="glass-card px-8 py-3 w-max hidden md:block rounded-full">
-            <ul className="flex items-center space-x-8">
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.href.substring(1);
-                return (
-                  <li key={item.name} className="relative">
-                    <a
-                      href={item.href}
-                      className={`text-sm font-medium transition-colors duration-200 ${
-                        isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      {item.name}
-                    </a>
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeNavIndicator"
-                        className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-cyan-400 rounded-full"
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                      />
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          {/* Mobile Hamburger Toggle */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden glass-card p-3 rounded-full text-slate-300 hover:text-white z-50 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </motion.header>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-xl pt-32 px-6 md:hidden flex flex-col"
-          >
-            <ul className="flex flex-col space-y-8 w-full">
-              {NAV_ITEMS.map((item) => {
-                const isActive = activeSection === item.href.substring(1);
-                return (
-                  <motion.li 
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="w-full"
-                  >
-                    <a
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block text-3xl font-bold transition-colors duration-200 ${
-                        isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      {item.name}
-                    </a>
-                  </motion.li>
-                );
-              })}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+        {navItems.map((item) => (
+          <DockIcon key={item.id} mouseX={mouseX} item={item} activeSection={activeSection} scrollTo={scrollTo} />
+        ))}
+      </div>
+    </motion.nav>
   );
 }

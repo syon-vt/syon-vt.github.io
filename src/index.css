@@ -1,18 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-primary-glow: rgba(0, 245, 255, 0.4);
+  --color-secondary-glow: rgba(189, 0, 255, 0.4);
+  --font-sans: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @layer base {
-  html, body {
-    @apply bg-slate-950 text-slate-50 antialiased overflow-x-hidden;
-    font-family: "Inter", sans-serif;
+  :root {
+    --bg-color: #050505;
+    --text-color: #ffffff;
+    --card-bg: rgba(25, 25, 25, 0.4);
+    --card-border: rgba(255, 255, 255, 0.05);
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Universally hide all native cursors since we have a custom Framer Motion cursor */
+  * {
+    cursor: none !important;
+  }
+
+  /* Lenis smooth scrolling requires this */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
   }
 }
 
 @layer utilities {
   .glass-card {
-    @apply bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-3xl shadow-xl;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 1.5rem;
   }
 }

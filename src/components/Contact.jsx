@@ -1,95 +1,109 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Mail, Phone, MapPin, Github, Linkedin, ArrowRight } from 'lucide-react';
 
+function MagneticButton({ children, href, className }) {
+  const ref = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const { x, y } = position;
+
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x, y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 export default function Contact() {
   return (
-    <section id="contact" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-          Get In Touch
-        </h2>
-        <p className="text-slate-400 text-lg max-w-xl mx-auto">
-          Always open for potential oppurtunities and collaborations.
-        </p>
-      </motion.div>
+    <section id="contact" className="min-h-[90vh] w-full flex flex-col items-center justify-center p-8 md:p-24 relative overflow-hidden">
+      
+      {/* Background ambient lighting */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-[#9900cf]/5 via-transparent to-transparent pointer-events-none blur-[120px]"></div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      <div className="max-w-4xl w-full relative z-10 text-center">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="glass-card p-6 md:p-8 flex flex-col justify-center space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1 }}
         >
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
-              <Phone className="text-cyan-400" size={24} />
+          <h2 className="text-sm font-mono tracking-[0.3em] text-[#00F5FF] uppercase mb-8 opacity-80">
+            05 — Reached The End
+          </h2>
+          <h3 className="text-6xl md:text-8xl font-black tracking-tighter mb-12" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+            Let's Build<br />The Future.
+          </h3>
+          
+          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mt-16 text-slate-400 font-mono text-sm tracking-widest">
+            <div className="flex items-center gap-3">
+              <MapPin size={16} className="text-[#00F5FF]" />
+              <span>Vellore, Tamil Nadu, 632014</span>
             </div>
-            <div>
-              <p className="text-sm text-slate-400 font-medium">Phone</p>
-              <a href="tel:+919544717407" className="text-white text-lg hover:text-cyan-400 transition-colors">
-                +91 9544717407
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
-              <Mail className="text-cyan-400" size={24} />
-            </div>
-            <div>
-              <p className="text-sm text-slate-400 font-medium">Email</p>
-              <a href="mailto:17407syon@gmail.com" className="text-white text-lg hover:text-cyan-400 transition-colors">
-                17407syon@gmail.com
-              </a>
+            <span className="hidden md:inline-block w-1.5 h-1.5 rounded-full bg-white/20"></span>
+            <div className="flex items-center gap-3">
+              <Phone size={16} className="text-[#00F5FF]" />
+              <a href="tel:+919544717407" className="hover:text-white transition-colors">+91 9544717407</a>
             </div>
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="glass-card p-6 md:p-8 flex flex-col justify-between"
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mt-20 flex flex-wrap justify-center gap-6"
         >
-          <div className="space-y-6 mb-8">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center shrink-0 mt-1">
-                <MapPin className="text-slate-300" size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-slate-400 font-medium">Current Location</p>
-                <p className="text-white">PO. 632014, Vellore, Tamil Nadu</p>
+          <MagneticButton 
+            href="mailto:17407syon@gmail.com" 
+            className="group flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/10 bg-[#131313] hover:bg-white hover:text-black transition-colors duration-500"
+          >
+            <Mail size={32} className="mb-2 group-hover:-translate-y-1 transition-transform" />
+            <span className="font-mono text-xs uppercase tracking-widest">Email</span>
+          </MagneticButton>
 
-                <div className="mt-4 pt-4 border-t border-white/10">
-                  <p className="text-sm text-slate-400 font-medium">Permanent Location</p>
-                  <p className="text-slate-300 text-sm mt-1">PO. 680712, Thrissur, Kerala</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <MagneticButton 
+            href="https://github.com/syon-vt" 
+            className="group flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/10 bg-[#131313] hover:bg-white hover:text-black transition-colors duration-500"
+          >
+            <Github size={32} className="mb-2 group-hover:-translate-y-1 transition-transform" />
+            <span className="font-mono text-xs uppercase tracking-widest">Github</span>
+          </MagneticButton>
 
-          <div className="flex gap-4 pt-4 border-t border-white/5">
-            <a href="https://github.com/syon-vt" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-white/10 rounded-lg text-slate-300 hover:text-white hover:border-white/30 transition-all">
-              <Github size={20} />
-              <span className="font-medium">syon-vt</span>
-            </a>
-            <a href="https://www.linkedin.com/in/syon-vijae-thyvalappil-b551b73a7/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-white/10 rounded-lg text-slate-300 hover:text-white hover:border-white/30 transition-all">
-              <Linkedin size={20} />
-              <span className="font-medium">Syon Vijae</span>
-            </a>
-          </div>
+          <MagneticButton 
+            href="https://www.linkedin.com/in/syon-vijae-thyvalappil-b551b73a7/" 
+            className="group flex flex-col items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/10 bg-[#131313] hover:bg-[#00F5FF] hover:border-[#00F5FF] hover:text-black transition-colors duration-500"
+          >
+            <Linkedin size={32} className="mb-2 group-hover:-translate-y-1 transition-transform" />
+            <span className="font-mono text-xs uppercase tracking-widest">LinkedIn</span>
+          </MagneticButton>
         </motion.div>
       </div>
+
     </section>
   );
 }
