@@ -143,22 +143,22 @@ export default function Hero() {
     <section id="hero" className="w-full h-screen relative flex items-center justify-center">
 
       {/* Extended height to 150vh so the particles spill completely down behind the next Education page */}
-      <div className="absolute top-0 left-0 w-full h-[150vh] z-0 pointer-events-none overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-[110vh] md:h-[150vh] z-0 pointer-events-none overflow-hidden">
         <Canvas camera={{ position: [0, 0, 15] }} style={{ pointerEvents: 'none' }} eventSource={document.body} eventPrefix="client">
           <ambientLight intensity={0.5} />
           <ParticleVortex count={9500} /> {/* Render bulk of the universe securely behind the text container */}
         </Canvas>
         {/* Thicker gradient fade at the bottom of the 150vh container */}
-        <div className="absolute bottom-0 left-0 w-full h-[80vh] bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-[40vh] md:h-[80vh] bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent z-10 pointer-events-none"></div>
       </div>
 
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative z-10 text-center max-w-4xl px-12 py-12 rounded-[2rem] bg-[#050505]/20 backdrop-blur-sm border border-white/10 border-b-transparent border-r-transparent shadow-[0_20px_40px_-5px_rgba(0,0,0,0.8)] pointer-events-none"
+        className="relative z-10 text-center max-w-4xl mx-4 px-6 py-10 md:px-12 md:py-12 rounded-[2rem] bg-[#050505]/20 backdrop-blur-sm border border-white/10 border-b-transparent border-r-transparent shadow-[0_20px_40px_-5px_rgba(0,0,0,0.8)] pointer-events-none"
       >
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,1)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+        <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,1)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
           SYON VIJAE
         </h1>
 
@@ -166,7 +166,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-3xl font-medium text-[#00F5FF] mb-8 tracking-widest uppercase"
+          className="text-lg md:text-3xl font-medium text-[#00F5FF] mb-8 tracking-widest uppercase"
         >
           Computer Science Student
         </motion.h2>
@@ -175,7 +175,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-white max-w-2xl mx-auto leading-relaxed border-l-2 border-[#00F5FF]/50 pl-6 text-left drop-shadow-sm font-medium"
+          className="text-base md:text-xl text-white max-w-2xl mx-auto leading-relaxed border-l-2 border-[#00F5FF]/50 pl-4 md:pl-6 text-left drop-shadow-sm font-medium"
         >
           Computer Science student at VIT Vellore and Code2Create Finalist. Junior Core member at VinnovateIT, currently contributing to the web migration of campus applications. Focused on Python automation, local AI implementation, and systems optimization.
         </motion.p>
@@ -192,7 +192,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Foreground Hover Swarm: Pushes right through and cleanly OVER the frosted glass text box natively! */}
-      <div className="absolute top-0 left-0 w-full h-[150vh] z-40 pointer-events-none overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-[110vh] md:h-[150vh] z-40 pointer-events-none overflow-hidden">
         <Canvas camera={{ position: [0, 0, 15] }} style={{ pointerEvents: 'none' }} eventSource={document.body} eventPrefix="client" gl={{ alpha: true }}>
           <ambientLight intensity={0.5} />
           {/* Sparse 500-count array precisely interacting with mouse gravity but rendering geometrically ON TOP of HTML texts globally with Normal Blending to natively occlude white text */}

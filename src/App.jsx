@@ -65,27 +65,29 @@ function App() {
     gsap.ticker.lagSmoothing(0);
 
     const handleMouseMove = (e) => {
-      // Use requestAnimationFrame to detach from raw event loop framing, ensuring snappiness
       requestAnimationFrame(() => {
         setMousePosition({ x: e.clientX, y: e.clientY });
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // Detect if the device has hover capabilities (desktop) vs touch (mobile)
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    if (canHover) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
 
-    let ctx = gsap.context(() => {
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
       const horizontalScroll = horizontalRef.current;
       if (horizontalScroll) {
         const totalScroll = horizontalScroll.scrollWidth - window.innerWidth;
-        // Map exact percentage position of each section relative to total tracking distance
-        const sections = gsap.utils.toArray(horizontalScroll.children);
-        const snapPoints = sections.map(child => Math.min(1, Math.max(0, child.offsetLeft / totalScroll)));
-
+        
         ScrollTrigger.create({
           trigger: ".horizontal-view-trigger",
           pin: true,
           start: "top top",
-          end: () => `+=${totalScroll * 0.6}`, // Make scrolling 40% faster
+          end: () => `+=${totalScroll * 0.8}`,
           animation: gsap.to(horizontalScroll, {
             x: -totalScroll,
             ease: "none"
@@ -103,35 +105,58 @@ function App() {
       }
     });
 
+    // Vertical flow for tablets and mobile
+    mm.add("(max-width: 1023px)", () => {
+      const sections = ['hero', 'education', 'experience', 'projects', 'tech', 'resume', 'contact'];
+      sections.forEach(id => {
+        ScrollTrigger.create({
+          trigger: `#${id}`,
+          start: "top center",
+          onEnter: () => setActiveSection(id),
+          onEnterBack: () => setActiveSection(id),
+        });
+      });
+    });
+
     return () => {
       lenis.destroy();
       window.removeEventListener('mousemove', handleMouseMove);
-      ctx.revert();
+      mm.revert();
     };
+  }, []);
+
+  const [showCursor, setShowCursor] = useState(false);
+
+  useEffect(() => {
+    setShowCursor(window.matchMedia('(hover: hover)').matches && window.innerWidth >= 1024);
   }, []);
 
   return (
     <div className="min-h-screen relative bg-[#050505] text-white overflow-x-hidden selection:bg-cyan-500/30">
       
-      <motion.div 
-        className="fixed top-0 left-0 w-4 h-4 rounded-full bg-[#00F5FF] shadow-[0_0_15px_#00F5FF] pointer-events-none z-[99999]"
-        animate={{ 
-          x: mousePosition.x - 8, 
-          y: mousePosition.y - 8 
-        }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.1 }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-0 mix-blend-screen"
-        style={{
-          background: 'radial-gradient(circle, rgba(0, 245, 255, 0.08) 0%, rgba(189, 0, 255, 0.02) 40%, rgba(0, 0, 0, 0) 70%)'
-        }}
-        animate={{ 
-          x: mousePosition.x - 300, 
-          y: mousePosition.y - 300 
-        }}
-        transition={{ type: "tween", ease: "linear", duration: 0 }}
-      />
+      {showCursor && (
+        <>
+          <motion.div 
+            className="fixed top-0 left-0 w-4 h-4 rounded-full bg-[#00F5FF] shadow-[0_0_15px_#00F5FF] pointer-events-none z-[99999]"
+            animate={{ 
+              x: mousePosition.x - 8, 
+              y: mousePosition.y - 8 
+            }}
+            transition={{ type: "tween", ease: "backOut", duration: 0.1 }}
+          />
+          <motion.div
+            className="fixed top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none z-0 mix-blend-screen"
+            style={{
+              background: 'radial-gradient(circle, rgba(0, 245, 255, 0.08) 0%, rgba(189, 0, 255, 0.02) 40%, rgba(0, 0, 0, 0) 70%)'
+            }}
+            animate={{ 
+              x: mousePosition.x - 300, 
+              y: mousePosition.y - 300 
+            }}
+            transition={{ type: "tween", ease: "linear", duration: 0 }}
+          />
+        </>
+      )}
 
       <Navigation activeSection={activeSection} />
       <Modals activeModal={activeModal} onClose={() => setActiveModal(null)} />
@@ -139,8 +164,8 @@ function App() {
       <main>
         <Hero />
 
-        <div className="horizontal-view-trigger h-screen w-full relative overflow-hidden">
-          <div ref={horizontalRef} className="horizontal-scroll-container h-full flex items-center w-max">
+        <div className="horizontal-view-trigger lg:h-screen w-full relative lg:overflow-hidden">
+          <div ref={horizontalRef} className="horizontal-scroll-container lg:h-full flex flex-col lg:flex-row lg:items-center w-full lg:w-max">
             <Education openModal={setActiveModal} />
             <BentoGrid openModal={setActiveModal} />
             <Projects />
@@ -154,19 +179,19 @@ function App() {
         </div>
       </main>
 
-      <footer className="py-8 border-t border-white/5 flex flex-col md:flex-row gap-4 items-center justify-between px-8 md:px-24 text-slate-500 text-sm font-mono relative z-20 bg-[#050505]">
-        <div className="flex items-center gap-4">
-          <p>© {new Date().getFullYear()} — Syon Vijae</p>
+      <footer className="py-8 border-t border-white/5 flex flex-col md:flex-row gap-6 items-center justify-between px-8 md:px-24 text-slate-500 text-sm font-mono relative z-20 bg-[#050505] text-center md:text-left">
+        <div className="flex items-center gap-3">
+          <p className="whitespace-nowrap">© {new Date().getFullYear()} — Syon Vijae</p>
           <div className="group flex items-center gap-2 cursor-pointer transition-all duration-300">
-            <span className="relative flex h-3 w-3">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="text-xs text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity bg-white/5 px-2 py-1 rounded-md border border-white/10">Open for Opportunities</span>
+            <span className="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity bg-white/5 px-2 py-0.5 rounded-md border border-white/10 whitespace-nowrap">Open for Opportunities</span>
           </div>
         </div>
         
-        <div className="flex items-center gap-6">
+        <div className="flex items-center justify-center gap-6">
           <span className="text-xs">
             Last Updated: <span className="text-white/80">{lastUpdated}</span>
           </span>

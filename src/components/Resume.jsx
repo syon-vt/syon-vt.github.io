@@ -17,6 +17,8 @@ const MagneticSlideDownload = ({ href }) => {
   const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
   const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+
   return (
     <motion.a
       ref={ref}
@@ -25,11 +27,12 @@ const MagneticSlideDownload = ({ href }) => {
       rel="noopener noreferrer"
       download="Syon_Vijae_Thyvalappil_Resume.pdf"
       style={{ x: springX, y: springY }}
+      whileTap={{ scale: 0.95 }}
       onMouseMove={(e) => {
-        // Computations dampened to 0.15 (15%) for a "slight" magnetic drag effect
+        if (isMobile) return;
         const { left, top, width, height } = ref.current.getBoundingClientRect();
-        x.set((e.clientX - (left + width / 2)) * 0.15); 
-        y.set((e.clientY - (top + height / 2)) * 0.15);
+        x.set((e.clientX - (left + width / 2)) * 0.25); 
+        y.set((e.clientY - (top + height / 2)) * 0.25);
       }}
       onMouseLeave={() => {
         x.set(0);
@@ -65,7 +68,7 @@ export default function Resume() {
   const springImgY = useSpring(imgY, { stiffness: 100, damping: 25, mass: 1 });
 
   return (
-    <section id="resume" className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-white/5">
+    <section id="resume" className="max-w-6xl mx-auto px-6 py-16 md:py-24 border-t border-white/5">
       <div className="flex flex-col gap-8 md:gap-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -87,20 +90,22 @@ export default function Resume() {
         <div style={{ perspective: 1000 }}>
           {/* Outer component governs absolute 3D rendering bounds dynamically bypassing inner-layer interactions natively */}
           <motion.div
-            initial={{ opacity: 0, rotateX: 25, y: 150, scale: 0.95 }}
-            whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
             className="w-full"
           >
-            {/* Inner responsive tracker bounds intercepting extremely subtle 2% magnetic elasticity locally */}
+            {/* Inner responsive tracker bounds intercepting extremely subtle 4% magnetic elasticity locally */}
             <motion.div
               ref={imgRef}
               style={{ x: springImgX, y: springImgY }}
               onMouseMove={(e) => {
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+                if (isMobile) return;
                 const { left, top, width, height } = imgRef.current.getBoundingClientRect();
-                imgX.set((e.clientX - (left + width / 2)) * 0.02); // 2% micro-shift
-                imgY.set((e.clientY - (top + height / 2)) * 0.02);
+                imgX.set((e.clientX - (left + width / 2)) * 0.04); // 4% micro-shift
+                imgY.set((e.clientY - (top + height / 2)) * 0.04);
               }}
               onMouseLeave={() => {
                 imgX.set(0);

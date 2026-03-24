@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function Education({ openModal }) {
   return (
-    <section id="education" className="h-full flex-shrink-0 w-screen flex items-center justify-center p-8 md:p-24 border-r border-white/5 relative">
+    <section id="education" className="lg:h-full flex-shrink-0 lg:w-screen w-full h-auto flex items-center justify-center p-6 md:p-24 border-b lg:border-b-0 lg:border-r border-white/5 relative">
       <div className="max-w-4xl w-full">
         <div className="mb-12">
           <h2 className="text-sm font-mono tracking-[0.3em] text-[#00F5FF] uppercase mb-4 opacity-80">
@@ -14,8 +14,9 @@ export default function Education({ openModal }) {
           </h3>
         </div>
 
-        <div 
+        <motion.div 
           onClick={() => openModal('vit')}
+          whileTap={{ scale: 0.98 }}
           onMouseMove={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
@@ -74,7 +75,7 @@ export default function Education({ openModal }) {
               </ul>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

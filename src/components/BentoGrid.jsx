@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Terminal, Bot, CalendarDays } from 'lucide-react';
 import gdgIcon from '../assets/gdg.png';
 import vinIcon from '../assets/vin.png';
@@ -21,8 +22,8 @@ export default function BentoGrid({ openModal }) {
       title: "VinnovateIT",
       role: "Junior Core - Tech (AI/ML)",
       desc: "Contributing to the transition of the campus mess management app messIT into a web-based platform.",
-      color: "from-[#00F5FF]/20 to-blue-500/5",
-      iconColor: "text-[#00F5FF]",
+      color: "from-[#bf9bf2]/20 to-[#bf9bf2]/5",
+      iconColor: "text-[#bf9bf2]",
       icon: Bot,
       img: vinIcon
     },
@@ -31,16 +32,16 @@ export default function BentoGrid({ openModal }) {
       title: "IEEE Computer Society",
       role: "Junior Core - Management (Events)",
       desc: "Assisted in the preparation and execution of chapter events during the Riviera cultural festival.",
-      color: "from-[#9900cf]/20 to-purple-500/5",
-      iconColor: "text-[#9900cf]",
+      color: "from-[#f9a31a]/20 to-[#f9a31a]/5",
+      iconColor: "text-[#f9a31a]",
       icon: CalendarDays,
       img: ieeeIcon
     }
   ];
 
   return (
-    <section id="experience" className="h-full flex-shrink-0 w-screen flex items-center justify-center p-8 md:px-24 md:py-12 border-r border-white/5 relative">
-      <div className="max-w-6xl w-full">
+    <section id="experience" className="lg:h-full flex-shrink-0 lg:w-screen w-full flex items-center justify-center p-6 md:p-24 md:py-12 border-b lg:border-b-0 lg:border-r border-white/5 relative">
+      <div className="max-w-6xl w-full py-12 lg:py-0">
         <div className="mb-8">
           <h2 className="text-sm font-mono tracking-[0.3em] text-[#00F5FF] uppercase mb-4 opacity-80">
             02 — Experience
@@ -53,8 +54,9 @@ export default function BentoGrid({ openModal }) {
         {/* Removed fixed h-[500px] and used dynamic grid mapping for responsive heights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {experiences.map((exp, idx) => (
-            <div 
+            <motion.div 
               key={idx}
+              whileTap={{ scale: 0.98 }}
               onClick={() => openModal(exp.id)} 
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -92,7 +94,7 @@ export default function BentoGrid({ openModal }) {
                   {exp.desc}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

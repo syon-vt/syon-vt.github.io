@@ -24,20 +24,20 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="h-full flex-shrink-0 w-screen flex items-center justify-center p-8 md:p-24 border-r border-white/5 relative">
-      <div className="max-w-6xl w-full">
+    <section id="projects" className="lg:h-full flex-shrink-0 lg:w-screen w-full h-auto flex items-center justify-center p-6 md:p-24 border-b lg:border-b-0 lg:border-r border-white/5 relative">
+      <div className="max-w-6xl w-full py-12 lg:py-0">
         <div className="mb-12 flex justify-between items-end">
           <div>
             <h2 className="text-sm font-mono tracking-[0.3em] text-[#00F5FF] uppercase mb-4 opacity-80">
               03 — Output
             </h2>
-            <h3 className="text-5xl md:text-7xl font-bold tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+            <h3 className="text-4xl md:text-7xl font-bold tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
               Selected Works
             </h3>
           </div>
         </div>
 
-        <div className="flex gap-8 w-full">
+        <div className="flex flex-col lg:flex-row gap-8 w-full">
           {projects.map((project, idx) => (
             <div 
               key={idx} 
@@ -46,7 +46,7 @@ export default function Projects() {
                 e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
                 e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
               }}
-              className="card-spotlight-effect glass-card group relative w-1/2 min-h-[400px] flex flex-col overflow-hidden hover:border-white/20 transition-all duration-500"
+              className="card-spotlight-effect glass-card group relative w-full lg:w-1/2 min-h-[400px] flex flex-col overflow-hidden hover:border-white/20 transition-all duration-500"
             >
               {/* Removed structural fake image layer. Added sleek gradient border top instead. */}
               <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${project.visual} to-transparent`}></div>
